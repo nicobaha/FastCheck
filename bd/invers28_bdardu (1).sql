@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 24, 2024 at 07:31 AM
+-- Generation Time: Oct 24, 2024 at 07:50 AM
 -- Server version: 8.0.37-cll-lve
 -- PHP Version: 8.3.12
 
@@ -61,8 +61,16 @@ CREATE TABLE `Arduino` (
 --
 DELIMITER $$
 CREATE TRIGGER `presente` AFTER INSERT ON `Arduino` FOR EACH ROW BEGIN
+    DECLARE alumno_rut INT;
+
+    -- Obtener el rut del alumno usando ID_ARDUINO = huella_id
+    SELECT rut_alumno INTO alumno_rut 
+    FROM Alumno 
+    WHERE huella_id = NEW.ID_ARDUINO;
+
+    -- Insertar en Data_para_enviar
     INSERT INTO Data_para_enviar (rut_alumno, PRESENTE, COD_CLASE)
-    VALUES (NEW.ID_ARDUINO, NEW.asistencia, NULL);
+    VALUES (alumno_rut, NEW.asistencia, NULL);
 END
 $$
 DELIMITER ;
@@ -94,6 +102,16 @@ ALTER TABLE `Alumno`
 --
 ALTER TABLE `Arduino`
   ADD PRIMARY KEY (`ID_ARDUINO`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Arduino`
+--
+ALTER TABLE `Arduino`
+  ADD CONSTRAINT `fk_arduino_huella` FOREIGN KEY (`ID_ARDUINO`) REFERENCES `Alumno` (`huella_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
