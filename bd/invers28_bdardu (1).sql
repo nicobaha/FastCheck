@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 23, 2024 at 03:56 PM
+-- Generation Time: Oct 24, 2024 at 07:31 AM
 -- Server version: 8.0.37-cll-lve
 -- PHP Version: 8.3.12
 
@@ -53,8 +53,31 @@ INSERT INTO `Alumno` (`huella_id`, `rut_alumno`, `nombre_completo`, `correo_elec
 
 CREATE TABLE `Arduino` (
   `ID_ARDUINO` int NOT NULL,
-  `ASISTENCIA` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+  `asistencia` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Triggers `Arduino`
+--
+DELIMITER $$
+CREATE TRIGGER `presente` AFTER INSERT ON `Arduino` FOR EACH ROW BEGIN
+    INSERT INTO Data_para_enviar (rut_alumno, PRESENTE, COD_CLASE)
+    VALUES (NEW.ID_ARDUINO, NEW.asistencia, NULL);
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Data_para_enviar`
+--
+
+CREATE TABLE `Data_para_enviar` (
+  `rut_alumno` int NOT NULL,
+  `PRESENTE` int DEFAULT NULL,
+  `COD_CLASE` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
