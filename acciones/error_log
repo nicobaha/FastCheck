@@ -1,0 +1,17 @@
+[22-Oct-2024 16:31:27 UTC] PHP Warning:  include(acciones/conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/formulario.php on line 2
+[22-Oct-2024 16:31:27 UTC] PHP Warning:  include(acciones/conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/formulario.php on line 2
+[22-Oct-2024 16:31:27 UTC] PHP Warning:  include(): Failed opening 'acciones/conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/formulario.php on line 2
+[22-Oct-2024 16:31:57 UTC] PHP Warning:  include(acciones/conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/acciones.php on line 2
+[22-Oct-2024 16:31:57 UTC] PHP Warning:  include(acciones/conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/acciones.php on line 2
+[22-Oct-2024 16:31:57 UTC] PHP Warning:  include(): Failed opening 'acciones/conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/acciones.php on line 2
+[22-Oct-2024 16:31:57 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/acciones.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/acciones.php on line 14
+[22-Oct-2024 16:32:19 UTC] PHP Warning:  include(acciones/conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/exportar.php on line 3
+[22-Oct-2024 16:32:19 UTC] PHP Warning:  include(acciones/conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/exportar.php on line 3
+[22-Oct-2024 16:32:19 UTC] PHP Warning:  include(): Failed opening 'acciones/conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/exportar.php on line 3
+[22-Oct-2024 16:32:19 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/exportar.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/acciones/exportar.php on line 7

@@ -1,0 +1,54 @@
+[22-Oct-2024 16:22:50 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:22:50 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:22:50 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:22:50 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/fastcheck/alumno.php:9
+Stack trace:
+#0 /home/invers28/public_html/fastcheck/index.php(17): include()
+#1 {main}
+  thrown in /home/invers28/public_html/fastcheck/alumno.php on line 9
+[22-Oct-2024 16:26:06 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:26:06 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:26:06 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:26:06 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/fastcheck/alumno.php:9
+Stack trace:
+#0 /home/invers28/public_html/fastcheck/index.php(17): include()
+#1 {main}
+  thrown in /home/invers28/public_html/fastcheck/alumno.php on line 9
+[22-Oct-2024 16:28:54 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:28:54 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:28:54 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:28:54 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php:9
+Stack trace:
+#0 /home/invers28/public_html/copia_fastcheck/fastcheck/index.php(17): include()
+#1 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 9
+[22-Oct-2024 16:30:51 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:30:51 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:30:51 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:30:51 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php:9
+Stack trace:
+#0 /home/invers28/public_html/copia_fastcheck/fastcheck/index.php(17): include()
+#1 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 9
+[22-Oct-2024 16:32:32 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:32 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:32 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:32 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 9
+[22-Oct-2024 16:32:43 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:43 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:43 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:43 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php:9
+Stack trace:
+#0 /home/invers28/public_html/copia_fastcheck/fastcheck/index.php(17): include()
+#1 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 9
+[22-Oct-2024 16:32:53 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:53 UTC] PHP Warning:  include(conexion.php): failed to open stream: No such file or directory in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:53 UTC] PHP Warning:  include(): Failed opening 'conexion.php' for inclusion (include_path='.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 3
+[22-Oct-2024 16:32:53 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/invers28/public_html/copia_fastcheck/fastcheck/alumno.php on line 9
