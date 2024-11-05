@@ -1,0 +1,35 @@
+#include <Adafruit_Fingerprint.h>
+
+#if (defined(__AVR__) || defined(ESP8266)) && !defined(__AVR_ATmega2560__)
+SoftwareSerial mySerial(2, 3); // Utiliza SoftwareSerial en pines 2 y 3
+#else
+#define mySerial Serial1 
+#endif
+
+Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
+
+void setup() {
+  Serial.begin(9600); // Inicializa la comunicación serie
+  finger.begin(57600); // Inicializa el sensor de huellas dactilares
+ 
+}
+
+void loop() {
+  getFingerprintID(); // Llama a la función para obtener el ID de la huella
+  delay(50); // Espera un poco antes de volver a leer
+}
+
+int getFingerprintID() {
+  uint8_t p = finger.getImage(); // Obtiene la imagen de la huella
+  if (p != FINGERPRINT_OK) return 0; // Verifica si se obtuvo correctamente
+
+  p = finger.image2Tz(); // Convierte la imagen a un formato de plantilla
+  if (p != FINGERPRINT_OK) return 0; // Verifica si se convirtió correctamente
+
+  p = finger.fingerFastSearch(); // Busca la huella en la base de datos
+  if (p != FINGERPRINT_OK) return 0; // Verifica si se encontró la huella
+
+  // Solo envía el ID de la huella como un número, no como texto
+  Serial.println(finger.fingerID); // Envía solo el ID encontrado como un número
+  return finger.fingerID; // Retorna el ID encontrado
+}
