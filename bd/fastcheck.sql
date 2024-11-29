@@ -91,3 +91,12 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Poblar la tabla Data_recibida con datos de ALUMNO
+INSERT INTO `Data_recibida` (`rut_alumno`, `PRESENTE`, `COD_CLASE`) VALUES
+(19308972, 1, 1), -- Juan Pérez - Presente
+(16894402, 0, 2), -- Andres Blauboeer - Ausente
+(20434053, 1, 3), -- Pedro Gutiérrez - Presente
+(33333333, 0, 4); -- Carlos González - Ausente
+
+

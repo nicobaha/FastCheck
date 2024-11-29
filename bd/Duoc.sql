@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `ASIGNATURA`;
 CREATE TABLE `ASIGNATURA` (
   `id_asignatura` INT(11) NOT NULL,
   `nombre_asignatura` VARCHAR(200) DEFAULT NULL,
+  `cant_clases` INT NOT NULL,
   PRIMARY KEY (`id_asignatura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -47,7 +48,7 @@ INSERT INTO `ALUMNO` (`rut`, `nombre`) VALUES
 
 -- Crear la tabla CLASE
 CREATE TABLE `CLASE` (
-  `id_clase` INT(11) NOT NULL,
+  `id_clase` INT(11) NOT NULl AUTO_INCREMENT,
   `num_clase` INT(11) NOT NULL,
   `id_asignatura` INT(11) NOT NULL,
   `id_seccion` INT(11) NOT NULL,
@@ -63,24 +64,70 @@ CREATE TABLE `CLASE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Poblar la tabla ASIGNATURA
-INSERT INTO `ASIGNATURA` (`id_asignatura`, `nombre_asignatura`) VALUES
-(1, 'Matemáticas'),
-(2, 'Historia'),
-(3, 'Java'),
-(4, 'Inglés'),
-(5, 'Base de Datos')
-ON DUPLICATE KEY UPDATE nombre_asignatura=VALUES(nombre_asignatura);
+INSERT INTO `ASIGNATURA` (`id_asignatura`, `nombre_asignatura`, `cant_clases`) VALUES
+(1, 'Matemáticas', 10),
+(2, 'Historia', 8),
+(3, 'Java', 12),
+(4, 'Inglés', 6),
+(5, 'Base de Datos', 9)
+ON DUPLICATE KEY UPDATE 
+    nombre_asignatura=VALUES(nombre_asignatura),
+    cant_clases=VALUES(cant_clases);
 
 -- Poblar la tabla CLASE con id_dia
 INSERT INTO `CLASE` (`id_clase`, `num_clase`, `id_asignatura`, `id_seccion`, `rut`, `presente`, `id_dia`) VALUES
 (1, 1, 1, 1, 19308972, TRUE, 1),
 (2, 2, 1, 1, 19308972, FALSE, 2),
-(4, 4, 2, 2, 16894402, FALSE, 3),
-(5, 5, 2, 2, 16894402, TRUE, 4),
-(6, 6, 3, 3, 16894402, FALSE, 5),
-(7, 7, 3, 3, 16894402, TRUE, 6),
-(8, 8, 4, 4, 20434053, TRUE, 1),
-(9, 9, 4, 4, 20434053, FALSE, 2);
+(4, 4, 2, 2, 16894402, FALSE, 3);
+
+
+CREATE TABLE `Data_recibida` (
+  `rut_alumno` int NOT NULL,
+  `PRESENTE` int DEFAULT NULL,
+  `COD_CLASE` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+INSERT INTO Data_recibida (rut_alumno , PRESENTE , COD_CLASE ) VALUES
+(19308972 , 1 , 1 );
+
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS InsertarDesdeDataRecibida;
+
+
+--PROCEDIMIENTO ALMACENADO
+DELIMITER $$
+
+CREATE PROCEDURE InsertarDesdeDataRecibida()
+BEGIN
+    DECLARE ultimo_num_clase INT;
+
+    -- Obtener el último valor de num_clase en la tabla CLASE
+    SELECT COALESCE(MAX(num_clase), 0) INTO ultimo_num_clase FROM CLASE;
+
+    -- Incrementar el número de clase
+    SET ultimo_num_clase = ultimo_num_clase + 1;
+
+    -- Insertar los datos desde la tabla Data_recibida a CLASE
+    INSERT INTO CLASE (id_clase, num_clase, id_asignatura, id_seccion, rut, presente, id_dia)
+    SELECT 
+        NULL,                   -- id_clase: auto-increment
+        ultimo_num_clase,       -- num_clase: nuevo número de clase
+        dr.COD_CLASE,           -- id_asignatura: código de clase desde Data_recibida
+        1,                      -- id_seccion: valor fijo
+        dr.rut_alumno,          -- rut: RUT del alumno
+        dr.PRESENTE,            -- presente: estado de asistencia
+        1                       -- id_dia: valor fijo
+    FROM Data_recibida dr;
+END$$
+
+DELIMITER ;
 
 -- Rehabilitar las claves foráneas
 SET FOREIGN_KEY_CHECKS = 1;
+
+
