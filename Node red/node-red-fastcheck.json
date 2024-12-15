@@ -1,0 +1,23 @@
+[
+    {
+        "id": "63119ee2c8ae9d8f",
+        "type": "function",
+        "z": "53ad2280bf722132",
+        "name": "function pegar data",
+        "func": "const rows = msg.payload; // Datos obtenidos de FastCheck\nif (rows.length === 0) {\n    msg.payload = \"No hay datos para transferir.\";\n    return msg; // Detener si no hay datos\n}\n\nconst queries = rows.map(row => {\n    return `\n        INSERT INTO data_recibida (rut_alumno, PRESENTE, COD_CLASE)\n        VALUES (${row.rut_alumno}, ${row.PRESENTE}, ${row.COD_CLASE || 'NULL'});\n    `;\n}).join(\" \");\n\nmsg.topic = queries; // Todas las inserciones concatenadas\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 480,
+        "wires": [
+            [
+                "a911c106808c336e",
+                "0675768601f9048a"
+            ]
+        ]
+    }
+]

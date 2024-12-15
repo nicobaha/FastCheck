@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS `CLASE`;
 DROP TABLE IF EXISTS `ALUMNO`;
 DROP TABLE IF EXISTS `DIA`;
 DROP TABLE IF EXISTS `ASIGNATURA`;
+DROP TABLE IF EXISTS `Data_recibida`;
 
 -- Crear la tabla ASIGNATURA
 CREATE TABLE `ASIGNATURA` (
@@ -48,7 +49,7 @@ INSERT INTO `ALUMNO` (`rut`, `nombre`) VALUES
 
 -- Crear la tabla CLASE
 CREATE TABLE `CLASE` (
-  `id_clase` INT(11) NOT NULl AUTO_INCREMENT,
+  `id_clase` INT(11) NOT NULL AUTO_INCREMENT,
   `num_clase` INT(11) NOT NULL,
   `id_asignatura` INT(11) NOT NULL,
   `id_seccion` INT(11) NOT NULL,
@@ -80,26 +81,21 @@ INSERT INTO `CLASE` (`id_clase`, `num_clase`, `id_asignatura`, `id_seccion`, `ru
 (2, 2, 1, 1, 19308972, FALSE, 2),
 (4, 4, 2, 2, 16894402, FALSE, 3);
 
-
+-- Crear la tabla Data_recibida
 CREATE TABLE `Data_recibida` (
-  `rut_alumno` int NOT NULL,
-  `PRESENTE` int DEFAULT NULL,
-  `COD_CLASE` int DEFAULT NULL
+  `rut_alumno` INT NOT NULL,
+  `PRESENTE` INT DEFAULT NULL,
+  `COD_CLASE` INT DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- Poblar la tabla Data_recibida
+INSERT INTO `Data_recibida` (`rut_alumno`, `PRESENTE`, `COD_CLASE`) VALUES
+(19308972, 1, 1);
 
-
-INSERT INTO Data_recibida (rut_alumno , PRESENTE , COD_CLASE ) VALUES
-(19308972 , 1 , 1 );
-
-
-
-DELIMITER $$
-
+-- Eliminar el procedimiento almacenado si existe
 DROP PROCEDURE IF EXISTS InsertarDesdeDataRecibida;
 
-
---PROCEDIMIENTO ALMACENADO
+-- Crear el procedimiento almacenado
 DELIMITER $$
 
 CREATE PROCEDURE InsertarDesdeDataRecibida()
@@ -129,5 +125,3 @@ DELIMITER ;
 
 -- Rehabilitar las claves foráneas
 SET FOREIGN_KEY_CHECKS = 1;
-
-
