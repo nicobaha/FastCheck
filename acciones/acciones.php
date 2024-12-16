@@ -24,6 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bindParam(':id_carrera', $id_carrera);
     $stmt->execute();
 
-    header('Location: ../index.php');
+    header('Location: ../sistema.php');
     exit();
 }

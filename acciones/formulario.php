@@ -54,7 +54,7 @@ if (isset($_GET['id'])) {
                 <input type="text" class="form-control" name="id_carrera" value="<?= $id_carrera ?>" required>
             </div>
             <button type="submit" name="accion" value="<?= $id ? 'editar' : 'agregar' ?>" class="btn btn-primary"><?= $id ? 'Actualizar' : 'Agregar' ?></button>
-            <a href="../index.php" class="btn btn-secondary">Cancelar</a>
+            <a href="../sistema.php" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

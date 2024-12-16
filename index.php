@@ -3,20 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de alumno</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Registro de Asistencia y Gestión de Clases - DuocUC</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Lista de alumno</h1>
-        <div class="mb-3">
-            <a href="acciones/formulario.php" class="btn btn-primary">Agregar Nuevo Estudiante</a>
-            <a href="acciones/exportar.php" class="btn btn-success">Exportar a Excel</a>
-        </div>
-        <div class="table-responsive">
-            <?php include 'alumno.php'; ?>
-        </div>
+    <div class="container">
+        <header>
+            <img src="img/logo-duoc-v2.png" alt="DuocUC" class="logo">
+        </header>
+        
+        <main>
+            <div class="content-wrapper">
+                <div class="image-container">
+                    <img src="img/lvc.avif" alt="Estudiantes" class="students-image">
+                </div>
+                
+                <div class="login-container">
+                    <div class="login-box">
+                        <h1>Registro de Asistencia<br>y Gestión de Clases</h1>
+                        
+                        <div class="form-group">
+                            <select id="perfil" name="perfil">
+                                <option value="">SELECCIONE PERFIL</option>
+                                <option value="">GERMÁN BARRIENTOS</option>
+                            </select>
+
+                            <a href="sistema.php" class="btn-siguiente btn btn-primary">SIGUIENTE →</a>
+
+                            <div class="version">
+                                Versión - Fecha: 23/10/2023
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

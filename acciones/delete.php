@@ -19,5 +19,5 @@ if (isset($_GET['id'])) {
         echo "Error al eliminar el alumno: " . $e->getMessage();
     }
 }
-header('Location: ../index.php');
+header('Location: ../sistema.php');
 exit();
