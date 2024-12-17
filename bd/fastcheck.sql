@@ -1,20 +1,15 @@
--- Servidor: localhost:3306
--- Tiempo de generación: 24-10-2024 a las 10:01:43
--- Versión del servidor: 8.0.37-cll-lve
--- Versión de PHP: 8.3.12
+-- Deshabilitar las claves foráneas temporalmente
+SET FOREIGN_KEY_CHECKS = 0;
 
-USE fastnae;
+-- Eliminar las tablas si existen
+DROP TABLE IF EXISTS `Arduino`;
+DROP TABLE IF EXISTS `Data_para_enviar`;
+DROP TABLE IF EXISTS `Alumno`;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- Habilitar las claves foráneas
+SET FOREIGN_KEY_CHECKS = 1;
 
-
-
---
--- Estructura de tabla para la tabla `Alumno`
-
-
+-- Crear la tabla Alumno
 CREATE TABLE `Alumno` (
   `huella_id` int NOT NULL AUTO_INCREMENT,
   `rut_alumno` int NOT NULL,
@@ -24,30 +19,28 @@ CREATE TABLE `Alumno` (
   PRIMARY KEY (`huella_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `Alumno`
---
-
+-- Poblar la tabla Alumno
 INSERT INTO `Alumno` (`huella_id`, `rut_alumno`, `nombre_completo`, `correo_electronico`, `id_carrera`) VALUES
-(1, 19308972, 'Juan Pérez', 'juan.perez@email.com', 1),
-(2, 20145569, 'María González', 'maria.gonzalez@email.com', 2),
-(3, 21567890, 'Ana López', 'ana.lopez@email.com', 4),
-(4, 23456789, 'Luis Martínez', 'luis.martinez@email.com', 3);
+(1, 19308972, 'Nicolas Bahamonde', 'ni.bahamonde@duocuc.cl', 1),
+(2, 19308971, 'Gabriel Contreras', 'ga@duocuc.cl', 1),
+(3, 21483186, 'Ella Zampeze', 'el.zampeze@duocuc.cl', 1),
+(4, 21918279, 'Antonia Retamal', 'anretamal@duocuc.cl', 1);
 
---
--- Estructura de tabla para la tabla `Arduino`
---
-
+-- Crear la tabla Arduino
 CREATE TABLE `Arduino` (
   `ID_ARDUINO` int NOT NULL,
   `asistencia` int DEFAULT NULL,
   PRIMARY KEY (`ID_ARDUINO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Trigger para insertar en Data_para_enviar después de una inserción en Arduino
---
+-- Crear la tabla Data_para_enviar con COD_CLASE autoincrementable
+CREATE TABLE `Data_para_enviar` (
+  `rut_alumno` int NOT NULL,
+  `PRESENTE` int DEFAULT NULL,
+  `COD_CLASE` int NOT NULL AUTO_INCREMENT PRIMARY KEY
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- Crear el trigger para insertar en Data_para_enviar después de una inserción en Arduino
 DELIMITER //
 
 CREATE TRIGGER `presente` AFTER INSERT ON `Arduino` FOR EACH ROW 
@@ -60,38 +53,15 @@ BEGIN
     WHERE huella_id = NEW.ID_ARDUINO;
 
     -- Insertar en Data_para_enviar
-    INSERT INTO Data_para_enviar (rut_alumno, PRESENTE, COD_CLASE)
-    VALUES (alumno_rut, NEW.asistencia, NULL);
+    INSERT INTO Data_para_enviar (rut_alumno, PRESENTE)
+    VALUES (alumno_rut, NEW.asistencia);
 END//
 
 DELIMITER ;
 
---
--- Estructura de tabla para la tabla `Data_para_enviar`
---
-
-CREATE TABLE `Data_para_enviar` (
-  `rut_alumno` int NOT NULL,
-  `PRESENTE` int DEFAULT NULL,
-  `COD_CLASE` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Restricciones para tablas volcadas
---
-
+-- Agregar restricción de clave foránea en Arduino
 ALTER TABLE `Arduino`
   ADD CONSTRAINT `fk_arduino_huella` FOREIGN KEY (`ID_ARDUINO`) REFERENCES `Alumno` (`huella_id`) ON DELETE CASCADE;
 
+-- Confirmar los cambios
 COMMIT;
-
-
-
--- Poblar la tabla Data_recibida con datos de ALUMNO
-INSERT INTO `Data_recibida` (`rut_alumno`, `PRESENTE`, `COD_CLASE`) VALUES
-(19308972, 1, 1), -- Juan Pérez - Presente
-(16894402, 0, 2), -- Andres Blauboeer - Ausente
-(20434053, 1, 3), -- Pedro Gutiérrez - Presente
-(33333333, 0, 4); -- Carlos González - Ausente
-
-
