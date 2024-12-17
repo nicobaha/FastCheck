@@ -14,27 +14,29 @@
         
         <main>
             <div class="content-wrapper">
-                <div class="image-container">
-                    <img src="img/lvc.avif" alt="Estudiantes" class="students-image">
-                </div>
-                
-                <div class="login-container">
-                    <div class="login-box">
-                        <h1>Registro de Asistencia<br>y Gestión de Clases</h1>
-                        
-                        <div class="form-group">
-                            <select id="perfil" name="perfil">
-                                <option value="">SELECCIONE PERFIL</option>
-                                <option value="">GERMÁN BARRIENTOS</option>
-                            </select>
+                <div class="items-wrapper">
+                    <div class="image-container">
+                        <img src="img/lvc.avif" alt="Estudiantes" class="students-image">
+                    </div>
+                    
+                    <div class="login-container">
+                        <div class="login-box">
+                            <h1>Registro de Asistencia<br>y Gestión de Clases</h1>
+                            
+                            <div class="form-group">
+                                <select id="perfil" name="perfil">
+                                    <option value="">SELECCIONE PERFIL</option>
+                                    <option value="">DOCENTE</option>
+                                </select>
 
-                            <a href="sistema.php" class="btn-siguiente btn btn-primary">SIGUIENTE →</a>
+                                <a href="docente.php" class="btn-siguiente btn btn-primary">SIGUIENTE →</a>
 
-                            <div class="version">
-                                Versión - Fecha: 23/10/2023
+                                <div class="version">
+                                    Versión - Fecha: 23/10/2023
+                                </div>
                             </div>
+                        
                         </div>
-                       
                     </div>
                 </div>
             </div>
