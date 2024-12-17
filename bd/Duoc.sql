@@ -118,7 +118,7 @@ BEGIN
         dr.rut_alumno,          -- rut: RUT del alumno
         dr.PRESENTE,            -- presente: estado de asistencia
         1                       -- id_dia: valor fijo
-    FROM Data_recibida dr;
+    FROM Data_recibida Data_recibidaData_recibidadr;
 END$$
 
 DELIMITER ;

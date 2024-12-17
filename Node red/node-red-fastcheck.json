@@ -1,23 +1,381 @@
 [
     {
-        "id": "63119ee2c8ae9d8f",
+        "id": "53ad2280bf722132",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "62e3eb8b2531b0a1",
+        "type": "json",
+        "z": "53ad2280bf722132",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "80a4bea29195d534"
+            ]
+        ]
+    },
+    {
+        "id": "80a4bea29195d534",
         "type": "function",
         "z": "53ad2280bf722132",
-        "name": "function pegar data",
-        "func": "const rows = msg.payload; // Datos obtenidos de FastCheck\nif (rows.length === 0) {\n    msg.payload = \"No hay datos para transferir.\";\n    return msg; // Detener si no hay datos\n}\n\nconst queries = rows.map(row => {\n    return `\n        INSERT INTO data_recibida (rut_alumno, PRESENTE, COD_CLASE)\n        VALUES (${row.rut_alumno}, ${row.PRESENTE}, ${row.COD_CLASE || 'NULL'});\n    `;\n}).join(\" \");\n\nmsg.topic = queries; // Todas las inserciones concatenadas\nreturn msg;",
+        "name": "function 1",
+        "func": "let fingerprintID = parseInt(msg.payload);\n\nif (!isNaN(fingerprintID)) {\n    // Actualiza la consulta para incluir el campo 'asistencia'\n    msg.topic = \"INSERT INTO Arduino (ID_ARDUINO, asistencia) VALUES (?, ?)\";\n    msg.payload = [\n        fingerprintID, // ID del usuario\n        1              // Valor de asistencia como \"1\"\n    ];\n\n    // Mostrar estado en el nodo y enviar al depurador\n    node.status({\n        fill: \"green\",\n        shape: \"dot\",\n        text: `ID ${fingerprintID} agregado con éxito`\n    });\n    node.log(`ID ${fingerprintID} agregado con éxito`); // Mostrar en la consola lateral\n\n    // Agregar mensaje para un nodo de depuración\n    msg.debug = `ID ${fingerprintID} agregado con éxito`;\n    return msg;\n\n} else {\n    // Mostrar estado de error en el nodo y enviar al depurador\n    node.status({\n        fill: \"red\",\n        shape: \"ring\",\n        text: \"Error: ID no válido\"\n    });\n    node.error(\"Error: ID no válido\"); // Mostrar en la consola lateral\n\n    return null;  // Ignora si no es un número válido\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 970,
-        "y": 480,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "ef89162adfdc178e"
+            ]
+        ]
+    },
+    {
+        "id": "ef89162adfdc178e",
+        "type": "mysql",
+        "z": "53ad2280bf722132",
+        "mydb": "c858785c0323deb6",
+        "name": "",
+        "x": 670,
+        "y": 160,
+        "wires": [
+            []
+        ],
+        "info": "INSERT INTO Arduino (ID_ARDUINO, asistencia) VALUES (?, ?);"
+    },
+    {
+        "id": "530848c06018480d",
+        "type": "serial in",
+        "z": "53ad2280bf722132",
+        "name": "Arduino puerto",
+        "serial": "66824ebe9d55af16",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "62e3eb8b2531b0a1"
+            ]
+        ]
+    },
+    {
+        "id": "a911c106808c336e",
+        "type": "mysql",
+        "z": "53ad2280bf722132",
+        "mydb": "7d04ef4d75eb42a0",
+        "name": "Duroc",
+        "x": 710,
+        "y": 560,
+        "wires": [
+            [
+                "482111190e6ca5dc"
+            ]
+        ]
+    },
+    {
+        "id": "63119ee2c8ae9d8f",
+        "type": "function",
+        "z": "53ad2280bf722132",
+        "name": "function pegar data",
+        "func": "const rows = msg.payload; // Datos obtenidos de FastCheck\nif (!Array.isArray(rows) || rows.length === 0) {\n    msg.payload = \"No hay datos para transferir.\";\n    msg.topic = \"\"; // Limpia el topic anterior\n    return msg; // Detener si no hay datos\n}\n\n// Genera las consultas de inserción\nconst queries = rows.map(row => {\n    return `\n        INSERT INTO data_recibida (rut_alumno, PRESENTE, COD_CLASE)\n        VALUES (${row.rut_alumno}, ${row.PRESENTE}, ${row.COD_CLASE || 'NULL'});\n    `;\n}).join(\" \");\n\n// Sobrescribe el topic con las nuevas consultas\nmsg.topic = queries;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 560,
         "wires": [
             [
                 "a911c106808c336e",
                 "0675768601f9048a"
             ]
         ]
+    },
+    {
+        "id": "54da68f4a84e2826",
+        "type": "mysql",
+        "z": "53ad2280bf722132",
+        "mydb": "c858785c0323deb6",
+        "name": "",
+        "x": 570,
+        "y": 480,
+        "wires": [
+            [
+                "63119ee2c8ae9d8f"
+            ]
+        ]
+    },
+    {
+        "id": "8d11c09fbaff473d",
+        "type": "function",
+        "z": "53ad2280bf722132",
+        "name": "function copiar data",
+        "func": "msg.topic = `\n    SELECT rut_alumno, PRESENTE, COD_CLASE\n    FROM Data_para_enviar;\n`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 480,
+        "wires": [
+            [
+                "54da68f4a84e2826"
+            ]
+        ]
+    },
+    {
+        "id": "8ea085e7c093fd1a",
+        "type": "inject",
+        "z": "53ad2280bf722132",
+        "name": "08:30 clase",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "45 08 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"crontab\":\"0 8 * * 1-6\"}",
+        "payloadType": "json",
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "8d11c09fbaff473d"
+            ]
+        ]
+    },
+    {
+        "id": "0675768601f9048a",
+        "type": "debug",
+        "z": "53ad2280bf722132",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3838dbad8bb256ec",
+        "type": "inject",
+        "z": "53ad2280bf722132",
+        "name": "11:30 clase",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "45 11 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"crontab\":\"0 8 * * 1-6\"}",
+        "payloadType": "json",
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "8d11c09fbaff473d"
+            ]
+        ]
+    },
+    {
+        "id": "482111190e6ca5dc",
+        "type": "function",
+        "z": "53ad2280bf722132",
+        "name": "delete data",
+        "func": "msg.topic = `\nSET SQL_SAFE_UPDATES = 0;\n    DELETE FROM Data_para_enviar;\n`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 560,
+        "wires": [
+            [
+                "d7e114c039fa240b"
+            ]
+        ]
+    },
+    {
+        "id": "d7e114c039fa240b",
+        "type": "mysql",
+        "z": "53ad2280bf722132",
+        "mydb": "c858785c0323deb6",
+        "name": "",
+        "x": 1050,
+        "y": 560,
+        "wires": [
+            []
+        ],
+        "info": "INSERT INTO Arduino (ID_ARDUINO) VALUES (?);"
+    },
+    {
+        "id": "4cd86e141fb1d8e8",
+        "type": "function",
+        "z": "53ad2280bf722132",
+        "name": "delete tables",
+        "func": "msg.topic = `\nSET SQL_SAFE_UPDATES = 0;\n    DELETE FROM Data_para_enviar;\n    delete from Arduino;\n`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 720,
+        "wires": [
+            [
+                "641658262c55b392"
+            ]
+        ]
+    },
+    {
+        "id": "7f254bf6900e9659",
+        "type": "function",
+        "z": "53ad2280bf722132",
+        "name": "delete tables 2",
+        "func": "\nmsg.topic = `\nSET SQL_SAFE_UPDATES = 0;\n    DELETE FROM Data_recibida;\n    \n`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 780,
+        "wires": [
+            [
+                "a65de5ab4b4cf0a6"
+            ]
+        ]
+    },
+    {
+        "id": "641658262c55b392",
+        "type": "mysql",
+        "z": "53ad2280bf722132",
+        "mydb": "c858785c0323deb6",
+        "name": "",
+        "x": 850,
+        "y": 720,
+        "wires": [
+            []
+        ],
+        "info": "INSERT INTO Arduino (ID_ARDUINO) VALUES (?);"
+    },
+    {
+        "id": "a65de5ab4b4cf0a6",
+        "type": "mysql",
+        "z": "53ad2280bf722132",
+        "mydb": "7d04ef4d75eb42a0",
+        "name": "Duroc",
+        "x": 850,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f842ddef072b8b7d",
+        "type": "inject",
+        "z": "53ad2280bf722132",
+        "name": "Botón delete tables",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "4cd86e141fb1d8e8",
+                "7f254bf6900e9659"
+            ]
+        ]
+    },
+    {
+        "id": "c858785c0323deb6",
+        "type": "MySQLdatabase",
+        "name": "FastCheck",
+        "host": "localhost",
+        "port": "3306",
+        "db": "FastCheck",
+        "tz": "",
+        "charset": "UTF8",
+        "info": "INSERT INTO arduino (ID_ARDUINO) VALUES(?);"
+    },
+    {
+        "id": "66824ebe9d55af16",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "/dev/cu.usbserial-11310",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "7d04ef4d75eb42a0",
+        "type": "MySQLdatabase",
+        "name": "Duoc",
+        "host": "localhost",
+        "port": "3306",
+        "db": "Duoc",
+        "tz": "",
+        "charset": "UTF8"
     }
 ]
