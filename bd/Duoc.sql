@@ -42,10 +42,10 @@ CREATE TABLE `ALUMNO` (
 
 -- Poblar la tabla ALUMNO
 INSERT INTO `ALUMNO` (`rut`, `nombre`) VALUES
-(19308972, 'Juan Pérez'),
-(16894402, 'Andres Blauboeer'),
-(20434053, 'Pedro Gutiérrez'),
-(33333333, 'Carlos González');
+(19308972, 'Nicolás Bahamonde '),
+(19308971, 'Gabriel Contreras'),
+(21483186, 'Ella Zampeze'),
+(21918279, 'Antonia Retamal');
 
 -- Crear la tabla CLASE
 CREATE TABLE `CLASE` (
@@ -78,8 +78,7 @@ ON DUPLICATE KEY UPDATE
 -- Poblar la tabla CLASE con id_dia
 INSERT INTO `CLASE` (`id_clase`, `num_clase`, `id_asignatura`, `id_seccion`, `rut`, `presente`, `id_dia`) VALUES
 (1, 1, 1, 1, 19308972, TRUE, 1),
-(2, 2, 1, 1, 19308972, FALSE, 2),
-(4, 4, 2, 2, 16894402, FALSE, 3);
+;
 
 -- Crear la tabla Data_recibida
 CREATE TABLE `Data_recibida` (
@@ -120,6 +119,23 @@ BEGIN
         1                       -- id_dia: valor fijo
     FROM Data_recibida Data_recibidaData_recibidadr;
 END$$
+
+CREATE VIEW Vista_Asistencia AS
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY A.rut) AS `N° Columna`, -- Número de fila
+    A.rut AS `RUT`,
+    SUBSTRING_INDEX(A.nombre, ' ', 1) AS `Primer Nombre`, -- Extrae el primer nombre
+    SUBSTRING_INDEX(A.nombre, ' ', -1) AS `Apellido`,    -- Extrae el apellidoASIGNATURA
+    CASE 
+        WHEN C.presente = TRUE THEN 'Presente'
+        ELSE 'Ausente'
+    END AS `Asistencia`
+FROM 
+    ALUMNO A
+LEFT JOIN 
+    CLASE C ON A.rut = C.rut;
+    
+
 
 DELIMITER ;
 
